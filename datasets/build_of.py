@@ -49,7 +49,7 @@ if __name__ == '__main__':
     parser.add_argument("--new_width", type=int, default=0, help='resize image width')
     parser.add_argument("--new_height", type=int, default=0, help='resize image height')
 
-    parser.add_argument("--num_worker", type=int, default=8)
+    parser.add_argument("--num_worker", type=int, default=1)
     # parser.add_argument("--num_gpu", type=int, default=2, help='number of GPU')
     parser.add_argument("--out_format", type=str, default='dir', choices=['dir','zip'],
                         help='path to the dense_flow toolbox')
