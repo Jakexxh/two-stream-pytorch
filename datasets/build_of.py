@@ -20,14 +20,17 @@ def run_optical_flow(vid_item):
         pass
 
     current = current_process()
-    dev_id = (int(current._identity[0]) - 1) % NUM_GPU
+    # dev_id = (int(current._identity[0]) - 1) % NUM_GPU
     image_path = '{}/img'.format(out_full_path)
     flow_x_path = '{}/flow_x'.format(out_full_path)
     flow_y_path = '{}/flow_y'.format(out_full_path)
 
-    cmd = os.path.join(df_path + 'build/extract_gpu')+' -f {} -x {} -y {} -i {} -b 20 -t 1 -d {} -s 1 -o {} -w {} -h {}'.format(
-        quote(vid_path), quote(flow_x_path), quote(flow_y_path), quote(image_path), dev_id, out_format, new_size[0], new_size[1])
+    # cmd = os.path.join(df_path + 'build/extract_gpu')+' -f {} -x {} -y {} -i {} -b 20 -t 1 -d {} -s 1 -o {} -w {} -h {}'.format(
+    #     quote(vid_path), quote(flow_x_path), quote(flow_y_path), quote(image_path), dev_id, out_format, new_size[0], new_size[1])
 
+    cmd = os.path.join(df_path + 'build/denseFlow')+' -f {} -x {} -y {} -i {} -b 20 -t 1 -s 1 -o {} -w {} -h {}'.format(
+        quote(vid_path), quote(flow_x_path), quote(flow_y_path), quote(image_path), out_format, new_size[0], new_size[1])
+    
     os.system(cmd)
     print('{} {} done'.format(vid_id, vid_name))
     sys.stdout.flush()
@@ -47,7 +50,7 @@ if __name__ == '__main__':
     parser.add_argument("--new_height", type=int, default=0, help='resize image height')
 
     parser.add_argument("--num_worker", type=int, default=8)
-    parser.add_argument("--num_gpu", type=int, default=2, help='number of GPU')
+    # parser.add_argument("--num_gpu", type=int, default=2, help='number of GPU')
     parser.add_argument("--out_format", type=str, default='dir', choices=['dir','zip'],
                         help='path to the dense_flow toolbox')
     parser.add_argument("--ext", type=str, default='avi', choices=['avi','mp4'],
@@ -62,7 +65,7 @@ if __name__ == '__main__':
     out_format = args.out_format
     ext = args.ext
     new_size = (args.new_width, args.new_height)
-    NUM_GPU = args.num_gpu
+    # NUM_GPU = args.num_gpu
 
     if not os.path.isdir(out_path):
         print("creating folder: "+out_path)
