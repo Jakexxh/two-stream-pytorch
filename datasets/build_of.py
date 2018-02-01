@@ -119,12 +119,12 @@ def save_flows(flows,image, image_path, flow_x_path, flow_y_path, num,bound):
         os.makedirs(os.path.join(out_path))
 
     #save the image
-    save_img=os.path.join(image_path,'img_{:05d}.jpg'.format(num))
+    save_img=(image_path+'_{:05d}.jpg'.format(num))
     scipy.misc.imsave(save_img,image)
 
     #save the flows
-    save_x=os.path.join(flow_x_path,'_{:05d}.jpg'.format(num))
-    save_y=os.path.join(flow_y_path,'_{:05d}.jpg'.format(num))
+    save_x=(flow_x_path+'_{:05d}.jpg'.format(num))
+    save_y=(flow_y_path+'_{:05d}.jpg'.format(num))
     flow_x_img=Image.fromarray(flow_x)
     flow_y_img=Image.fromarray(flow_y)
     scipy.misc.imsave(save_x,flow_x_img)
@@ -156,7 +156,7 @@ def run_optical_flow(vid_item):
 	# 	new_size[1])
 	#
 	# os.system(cmd)
-	
+	dense_flow(quote(vid_path), vid_name, image_path, flow_x_path, flow_y_path)
 	print('{} {} done'.format(vid_id, vid_name))
 	sys.stdout.flush()
 	return True
@@ -164,12 +164,12 @@ def run_optical_flow(vid_item):
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="extract optical flows")
-	parser.add_argument("--src_dir", type=str, default='./UCF-101',
+	parser.add_argument("--src_dir", type=str, default='../UCF-101',
 	                    help='path to the video data')
 	parser.add_argument("--out_dir", type=str, default='./ucf101_frames',
 	                    help='path to store frames and optical flow')
-	parser.add_argument("--df_path", type=str, default='./dense_flow/',
-	                    help='path to the dense_flow toolbox')
+	# parser.add_argument("--df_path", type=str, default='./dense_flow/',
+	#                     help='path to the dense_flow toolbox')
 	
 	parser.add_argument("--new_width", type=int, default=0, help='resize image width')
 	parser.add_argument("--new_height", type=int, default=0, help='resize image height')
@@ -190,7 +190,7 @@ if __name__ == '__main__':
 	out_path = args.out_dir
 	src_path = args.src_dir
 	num_worker = args.num_worker
-	df_path = args.df_path
+	# df_path = args.df_path
 	out_format = args.out_format
 	ext = args.ext
 	new_size = (args.new_width, args.new_height)
